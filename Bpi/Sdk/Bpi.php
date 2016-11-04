@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
-
 /**
  * TODO please add a general description about the purpose of this class.
  */
@@ -41,6 +40,13 @@ class Bpi
     public function __construct($endpoint, $agency_id, $api_key, $secret_key)
     {
         $this->client = new \Goutte\Client();
+        /*
+         * The normal timeout is too low. 
+         * We exspect the services to always respond , hence infinite timeout.
+         * We also exspect the response time to increase even more as time goes by.
+         */
+        $this->client->getClient()->getConfig()->set('curl.options', array(CURLOPT_TIMEOUT => 0));
+        
         $this->authorization = new \Bpi\Sdk\Authorization($agency_id, $api_key, $secret_key);
         $this->current_document = $this->endpoint = $this->createDocument();
         $this->endpoint->loadEndpoint($endpoint);
