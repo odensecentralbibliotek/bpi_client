@@ -45,7 +45,7 @@ class Bpi
          * We exspect the services to always respond , hence infinite timeout.
          * We also exspect the response time to increase even more as time goes by.
          */
-        $this->client->getClient()->getConfig()->set('curl.options', array(CURLOPT_TIMEOUT => 0));
+        $this->client->getClient()->getConfig()->set('curl.options', array(CURLOPT_TIMEOUT => 3000000));
         
         $this->authorization = new \Bpi\Sdk\Authorization($agency_id, $api_key, $secret_key);
         $this->current_document = $this->endpoint = $this->createDocument();
